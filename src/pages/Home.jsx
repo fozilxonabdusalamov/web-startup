@@ -592,78 +592,7 @@ const Home = () => {
       </section>
 
       {/* Statistics */}
-      <section
-        ref={statsRef}
-        className="py-24 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 text-white relative overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-black opacity-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-800/50 to-primary-600/30"></div>
-        <div className="container relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6">
-              Raqamlar bilan tanishaylik
-            </h2>
-            <p className="text-xl text-primary-100 max-w-3xl mx-auto">
-              Bizning platformamiz orqali minglab kishi o'z orzuining ishini
-              topdilar
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-10">
-            {[
-              {
-                label: "Jami vakansiyalar",
-                value: stats.totalJobs,
-                suffix: "+",
-                icon: Briefcase,
-              },
-              {
-                label: "Ro'yxatdan o'tganlar",
-                value: stats.totalUsers,
-                suffix: "+",
-                icon: Users,
-              },
-              {
-                label: "Hamkor kompaniyalar",
-                value: stats.totalCompanies,
-                suffix: "+",
-                icon: Building2,
-              },
-              {
-                label: "Muvaffaqiyat ko'rsatkichi",
-                value: stats.successRate,
-                suffix: "%",
-                icon: TrendingUp,
-              },
-            ].map((stat, statIndex) => (
-              <div
-                key={stat.label}
-                data-animate
-                id={`stat-${statIndex}`}
-                className={`text-center group ${
-                  isVisible[`stat-${statIndex}`]
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${statIndex * 100}ms` }}
-              >
-                <div className="w-20 h-20 bg-white/10 group-hover:bg-white/20 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-all duration-300 transform group-hover:scale-110">
-                  <stat.icon size={36} className="text-primary-100" />
-                </div>
-                <div className="text-5xl lg:text-6xl font-bold mb-3">
-                  {typeof stat.value === "number"
-                    ? stat.value.toLocaleString()
-                    : "0"}
-                  {stat.suffix}
-                </div>
-                <div className="text-primary-100 font-semibold text-lg">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+   
 
       {/* Benefits */}
       <section className="py-20 bg-gray-50">
@@ -773,6 +702,7 @@ const Home = () => {
           )}
         </div>
       </section>
+      
     </div>
   );
 };
