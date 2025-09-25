@@ -144,11 +144,8 @@ const Footer = () => {
             <div>
               <Link
                 to="/"
-                className="flex items-center text-white space-x-3 mb-4"
+                className="flex text-white items-center text-white space-x-3 mb-4"
               >
-                <div className="w-10 h-10 bg-gradient-to-r from-primary-600 to-primary-700 rounded-lg flex items-center justify-center text-white font-extrabold">
-                  J
-                </div>
                 <span className="text-2xl font-bold">JobBoard</span>
               </Link>
               <p className="text-gray-300 leading-relaxed max-w-md">
@@ -164,7 +161,7 @@ const Footer = () => {
                 <Mail size={16} className="text-blue-400" />
                 <a
                   href="mailto:info@jobboard.uz"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-400 text-white transition-colors"
                 >
                   info@jobboard.uz
                 </a>
@@ -173,7 +170,7 @@ const Footer = () => {
                 <Phone size={16} className="text-blue-400" />
                 <a
                   href="tel:+998712345678"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-400 text-white transition-colors"
                 >
                   +998 71 234 56 78
                 </a>
@@ -186,7 +183,7 @@ const Footer = () => {
                 <Globe size={16} className="text-blue-400" />
                 <a
                   href="https://jobboard.uz"
-                  className="hover:text-blue-400 transition-colors"
+                  className="hover:text-blue-400 text-white transition-colors"
                 >
                   jobboard.uz
                 </a>
