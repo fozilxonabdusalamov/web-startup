@@ -164,8 +164,6 @@ const Navbar = () => {
     switch (user.role) {
       case "seeker":
         return "/dashboard/seeker";
-      case "employer":
-        return "/dashboard/employer";
       case "admin":
         return "/admin";
       default:
@@ -177,8 +175,6 @@ const Navbar = () => {
     switch (role) {
       case "seeker":
         return <User className="w-4 h-4" />;
-      case "employer":
-        return <Building2 className="w-4 h-4" />;
       case "admin":
         return <Shield className="w-4 h-4" />;
       default:
@@ -190,8 +186,7 @@ const Navbar = () => {
     switch (role) {
       case "seeker":
         return "Job Seeker";
-      case "employer":
-        return "Employer";
+
       case "admin":
         return "Administrator";
       default:
@@ -218,11 +213,6 @@ const Navbar = () => {
       icon: <Briefcase className="w-4 h-4" />,
       badge: "50K+",
     },
-    {
-      path: "/employers",
-      label: "Companies",
-      icon: <Building2 className="w-4 h-4" />,
-    },
     // Role-based navigation
     ...(user?.role === "admin"
       ? [
@@ -230,17 +220,6 @@ const Navbar = () => {
             path: "/admin",
             label: "Admin Panel",
             icon: <Shield className="w-4 h-4" />,
-          },
-        ]
-      : []),
-    ...(user?.role === "employer"
-      ? [
-          {
-            path: "/post-job",
-            label: "Post Job",
-            icon: <Plus className="w-4 h-4" />,
-            description: "Create new job posting",
-            highlight: true,
           },
         ]
       : []),

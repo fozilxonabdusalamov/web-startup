@@ -405,11 +405,11 @@ const Jobs = () => {
             </div>
 
             {/* Job List */}
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {loading ? (
                 // Loading skeleton
                 Array.from({ length: 6 }).map((_, index) => (
-                  <div key={index} className="card animate-pulse">
+                  <div key={index} className="bg-white rounded-2xl p-8 shadow-lg animate-pulse">
                     <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
                     <div className="h-3 bg-gray-200 rounded w-1/2 mb-4"></div>
                     <div className="flex space-x-4">
@@ -420,91 +420,94 @@ const Jobs = () => {
                   </div>
                 ))
               ) : jobs.length > 0 ? (
-                jobs.map((job) => (
-                  <div key={job.id} className="card hover:shadow-lg transition-shadow">
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="flex space-x-4 flex-1">
-                        <div className="text-4xl">{job.logo}</div>
-                        <div className="flex-1">
-                          <div className="flex items-center space-x-2 mb-2">
-                            <h2 className="text-xl font-semibold text-gray-900">
-                              <Link 
-                                to={`/jobs/${job.id}`} 
-                                className="hover:text-blue-600 transition-colors"
-                              >
-                                {job.title}
-                              </Link>
-                            </h2>
-                            {job.isNew && (
-                              <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                                Yangi
-                              </span>
-                            )}
-                            {job.isFeatured && (
-                              <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full">
-                                Tanlangan
-                              </span>
-                            )}
-                          </div>
-                          
-                          <p className="text-gray-600 mb-2">{job.company}</p>
-                          
-                          <div className="flex flex-wrap items-center text-sm text-gray-500 space-x-4 mb-3">
-                            <div className="flex items-center">
-                              <MapPin size={14} className="mr-1" />
-                              {job.location}
-                            </div>
-                            <div className="flex items-center">
-                              <Briefcase size={14} className="mr-1" />
-                              {job.type}
-                            </div>
-                            <div className="flex items-center">
-                              <DollarSign size={14} className="mr-1" />
-                              {job.salary}
-                            </div>
-                            <div className="flex items-center">
-                              <Clock size={14} className="mr-1" />
-                              {job.postedAt}
-                            </div>
-                          </div>
-                          
-                          <p className="text-gray-600 text-sm line-clamp-2">
-                            {job.description}
-                          </p>
+                jobs.map((job, index) => (
+                  <div 
+                    key={job.id} 
+                    className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group border border-gray-100 hover:border-primary-200"
+                  >
+                    <div className="flex items-start justify-between mb-6">
+                      <div className="flex items-center space-x-4">
+                        <div className="text-4xl bg-primary-50 p-3 rounded-xl">
+                          {job.logo}
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-xl text-gray-900 group-hover:text-primary-600 transition-colors mb-1">
+                            <Link 
+                              to={`/jobs/${job.id}`} 
+                              className="hover:text-primary-600 transition-colors"
+                            >
+                              {job.title}
+                            </Link>
+                          </h3>
+                          <p className="text-gray-600 font-medium">{job.company}</p>
                         </div>
                       </div>
-                      
-                      <button
-                        onClick={() => handleSaveJob(job.id)}
-                        className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
-                        aria-label="Vakansiyani saqlash"
-                      >
-                        <Bookmark size={20} />
-                      </button>
+                      <div className="flex flex-col space-y-1">
+                        {job.isNew && (
+                          <span className="bg-gradient-to-r from-green-100 to-green-50 text-green-800 text-sm px-3 py-1.5 rounded-full font-semibold border border-green-200">
+                            Yangi
+                          </span>
+                        )}
+                        {job.isFeatured && (
+                          <span className="bg-gradient-to-r from-yellow-100 to-yellow-50 text-yellow-800 text-sm px-3 py-1.5 rounded-full font-semibold border border-yellow-200">
+                            Tanlangan
+                          </span>
+                        )}
+                      </div>
                     </div>
 
-                    <div className="flex justify-between items-center pt-4 border-t">
-                      <div className="flex items-center space-x-4">
-                        <span className="text-sm text-gray-500">{job.views} ko'rishlar</span>
-                        <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-                          {job.category}
-                        </span>
-                        <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">
-                          {job.experience}
-                        </span>
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-center text-gray-600">
+                        <MapPin size={16} className="mr-3 text-primary-500" />
+                        <span className="font-medium">{job.location}</span>
                       </div>
-                      
+                      <div className="flex items-center text-gray-600">
+                        <Clock size={16} className="mr-3 text-primary-500" />
+                        <span className="font-medium">{job.type}</span>
+                      </div>
+                      <div className="flex items-center text-green-600 font-semibold">
+                        <DollarSign size={16} className="mr-3" />
+                        <span className="text-lg">{job.salary}</span>
+                      </div>
+                    </div>
+
+                    {/* Skills/Tags */}
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      <span className="bg-primary-50 text-primary-700 text-sm px-3 py-1.5 rounded-lg font-medium border border-primary-100">
+                        {job.category}
+                      </span>
+                      <span className="bg-blue-50 text-blue-700 text-sm px-3 py-1.5 rounded-lg font-medium border border-blue-100">
+                        {job.experience}
+                      </span>
+                      <span className="bg-gray-50 text-gray-700 text-sm px-3 py-1.5 rounded-lg font-medium border border-gray-100">
+                        {job.views} ko'rishlar
+                      </span>
+                    </div>
+
+                    <div className="mb-6">
+                      <p className="text-gray-600 text-sm line-clamp-2">
+                        {job.description}
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-6 border-t border-gray-100">
+                      <span className="text-gray-500 font-medium">
+                        {job.postedAt}
+                      </span>
                       <div className="flex space-x-2">
+                        <button
+                          onClick={() => handleSaveJob(job.id)}
+                          className="p-2 text-gray-400 hover:text-primary-600 transition-colors rounded-lg hover:bg-primary-50"
+                          aria-label="Vakansiyani saqlash"
+                        >
+                          <Bookmark size={16} />
+                        </button>
                         <Link
                           to={`/jobs/${job.id}`}
-                          className="btn btn-primary btn-sm"
+                          className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors"
                         >
                           Batafsil
                         </Link>
-                        <button className="btn btn-outline btn-sm">
-                          <ExternalLink size={14} className="mr-1" />
-                          Ariza
-                        </button>
                       </div>
                     </div>
                   </div>
