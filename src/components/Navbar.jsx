@@ -427,37 +427,7 @@ const Navbar = () => {
                 )}
               </div>
 
-              {/* Professional Theme Toggle - Desktop */}
-              <div className="desktop-flex hidden">
-                <button
-                  onClick={toggleTheme}
-                  className="navbar-button flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-200 hover:border-primary-300 hover:bg-gray-50 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md group"
-                  aria-label="Toggle theme"
-                  title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-                >
-                  <div className="relative w-5 h-5">
-                    {theme === "light" ? (
-                      <Moon className="w-5 h-5 text-gray-500 group-hover:text-primary-600 transition-colors" />
-                    ) : (
-                      <Sun className="w-5 h-5 text-yellow-500 group-hover:text-yellow-600 transition-colors" />
-                    )}
-                  </div>
-                  <span className="hidden lg:block font-medium text-gray-700 group-hover:text-primary-700">
-                    {theme === "light" ? "Dark" : "Light"}
-                  </span>
-                  <div
-                    className={`theme-toggle-track w-8 h-4 rounded-full p-0.5 ${
-                      theme === "dark" ? "dark" : ""
-                    }`}
-                  >
-                    <div
-                      className={`theme-toggle-thumb w-3 h-3 bg-white rounded-full ${
-                        theme === "dark" ? "translate-x-4" : "translate-x-0"
-                      }`}
-                    ></div>
-                  </div>
-                </button>
-              </div>
+             
 
               {/* Notifications */}
               {user && (
