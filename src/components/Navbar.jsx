@@ -1,233 +1,275 @@
-import { useState, useEffect } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { 
-  Search, User, Settings, BookmarkIcon, LogOut, 
-  Menu, X, ChevronDown, Bell, Building2, Users, 
-  BarChart3, Shield, Briefcase, Globe, Check,
-  Heart, MessageSquare, HelpCircle, Gift, Star,
-  Zap, Crown, Palette, Moon, Sun, Languages,
-  Megaphone, TrendingUp, Award, Target, Plus, Eye
-} from 'lucide-react'
+import { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Search,
+  User,
+  Settings,
+  BookmarkIcon,
+  LogOut,
+  Menu,
+  X,
+  ChevronDown,
+  Bell,
+  Building2,
+  Users,
+  BarChart3,
+  Shield,
+  Briefcase,
+  Globe,
+  Check,
+  Heart,
+  MessageSquare,
+  HelpCircle,
+  Gift,
+  Star,
+  Zap,
+  Crown,
+  Palette,
+  Moon,
+  Sun,
+  Languages,
+  Megaphone,
+  TrendingUp,
+  Award,
+  Target,
+  Plus,
+  Eye,
+} from "lucide-react";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false)
-  const [showUserDropdown, setShowUserDropdown] = useState(false)
-  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false)
-  const [showNotifications, setShowNotifications] = useState(false)
-  const [user, setUser] = useState(null)
-  const [scrolled, setScrolled] = useState(false)
-  const [currentLanguage, setCurrentLanguage] = useState('uz')
-  const [theme, setTheme] = useState('light')
-  const [notifications, setNotifications] = useState([])
-  const location = useLocation()
-  const navigate = useNavigate()
+  const [isOpen, setIsOpen] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [user, setUser] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState("uz");
+  const [theme, setTheme] = useState("light");
+  const [notifications, setNotifications] = useState([]);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   // Language options
   const languages = [
-    { code: 'uz', name: 'O\'zbekcha', flag: '🇺🇿', nativeName: 'O\'zbekcha' },
-    { code: 'ru', name: 'Русский', flag: '🇷🇺', nativeName: 'Русский' },
-    { code: 'en', name: 'English', flag: '🇺🇸', nativeName: 'English' },
-    { code: 'tr', name: 'Türkçe', flag: '🇹🇷', nativeName: 'Türkçe' }
-  ]
+    { code: "uz", name: "O'zbekcha", flag: "🇺🇿", nativeName: "O'zbekcha" },
+    { code: "ru", name: "Русский", flag: "🇷🇺", nativeName: "Русский" },
+    { code: "en", name: "English", flag: "🇺🇸", nativeName: "English" },
+    { code: "tr", name: "Türkçe", flag: "🇹🇷", nativeName: "Türkçe" },
+  ];
 
   // Mock user state and notifications
   useEffect(() => {
-    const userData = localStorage.getItem('user')
+    const userData = localStorage.getItem("user");
     if (userData) {
-      setUser(JSON.parse(userData))
+      setUser(JSON.parse(userData));
       // Mock notifications for logged in users
       setNotifications([
         {
           id: 1,
-          type: 'job_match',
-          title: 'New job matches found!',
-          message: '5 new jobs match your profile',
-          time: '5 min ago',
+          type: "job_match",
+          title: "New job matches found!",
+          message: "5 new jobs match your profile",
+          time: "5 min ago",
           read: false,
-          icon: <Briefcase className="w-5 h-5 text-blue-600" />
+          icon: <Briefcase className="w-5 h-5 text-blue-600" />,
         },
         {
           id: 2,
-          type: 'application',
-          title: 'Application viewed',
-          message: 'TechCorp viewed your application',
-          time: '1 hour ago',
+          type: "application",
+          title: "Application viewed",
+          message: "TechCorp viewed your application",
+          time: "1 hour ago",
           read: false,
-          icon: <Eye className="w-5 h-5 text-green-600" />
+          icon: <Eye className="w-5 h-5 text-green-600" />,
         },
         {
           id: 3,
-          type: 'message',
-          title: 'New message from recruiter',
-          message: 'Sarah from StartupXYZ sent you a message',
-          time: '2 hours ago',
+          type: "message",
+          title: "New message from recruiter",
+          message: "Sarah from StartupXYZ sent you a message",
+          time: "2 hours ago",
           read: true,
-          icon: <MessageSquare className="w-5 h-5 text-purple-600" />
-        }
-      ])
+          icon: <MessageSquare className="w-5 h-5 text-purple-600" />,
+        },
+      ]);
     }
 
     // Load saved language and theme
-    const savedLanguage = localStorage.getItem('language') || 'uz'
-    const savedTheme = localStorage.getItem('theme') || 'light'
-    setCurrentLanguage(savedLanguage)
-    setTheme(savedTheme)
-  }, [])
+    const savedLanguage = localStorage.getItem("language") || "uz";
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setCurrentLanguage(savedLanguage);
+    setTheme(savedTheme);
+  }, []);
 
   // Handle scroll effect with throttling
   useEffect(() => {
-    let ticking = false
+    let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
         requestAnimationFrame(() => {
-          setScrolled(window.scrollY > 20)
-          ticking = false
-        })
-        ticking = true
+          setScrolled(window.scrollY > 20);
+          ticking = false;
+        });
+        ticking = true;
       }
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (!event.target.closest('.user-dropdown')) {
-        setShowUserDropdown(false)
+      if (!event.target.closest(".user-dropdown")) {
+        setShowUserDropdown(false);
       }
-      if (!event.target.closest('.language-dropdown')) {
-        setShowLanguageDropdown(false)
+      if (!event.target.closest(".language-dropdown")) {
+        setShowLanguageDropdown(false);
       }
-      if (!event.target.closest('.notifications-dropdown')) {
-        setShowNotifications(false)
+      if (!event.target.closest(".notifications-dropdown")) {
+        setShowNotifications(false);
       }
-      if (!event.target.closest('.mobile-menu')) {
-        setIsOpen(false)
+      if (!event.target.closest(".mobile-menu")) {
+        setIsOpen(false);
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('user')
-    setUser(null)
-    setNotifications([])
-    setShowUserDropdown(false)
-    navigate('/')
-  }
+    localStorage.removeItem("user");
+    setUser(null);
+    setNotifications([]);
+    setShowUserDropdown(false);
+    navigate("/");
+  };
 
   const handleLanguageChange = (langCode) => {
-    setCurrentLanguage(langCode)
-    localStorage.setItem('language', langCode)
-    setShowLanguageDropdown(false)
+    setCurrentLanguage(langCode);
+    localStorage.setItem("language", langCode);
+    setShowLanguageDropdown(false);
     // In a real app, this would trigger translation system
-  }
+  };
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light'
-    setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
     // Apply theme class to document
-    document.documentElement.classList.toggle('dark', newTheme === 'dark')
-  }
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
 
   const getDashboardLink = () => {
-    if (!user) return '/login'
+    if (!user) return "/login";
     switch (user.role) {
-      case 'seeker': return '/dashboard/seeker'
-      case 'employer': return '/dashboard/employer'
-      case 'admin': return '/admin'
-      default: return '/dashboard/seeker'
+      case "seeker":
+        return "/dashboard/seeker";
+      case "employer":
+        return "/dashboard/employer";
+      case "admin":
+        return "/admin";
+      default:
+        return "/dashboard/seeker";
     }
-  }
+  };
 
   const getRoleIcon = (role) => {
     switch (role) {
-      case 'seeker': return <User className="w-4 h-4" />
-      case 'employer': return <Building2 className="w-4 h-4" />
-      case 'admin': return <Shield className="w-4 h-4" />
-      default: return <User className="w-4 h-4" />
+      case "seeker":
+        return <User className="w-4 h-4" />;
+      case "employer":
+        return <Building2 className="w-4 h-4" />;
+      case "admin":
+        return <Shield className="w-4 h-4" />;
+      default:
+        return <User className="w-4 h-4" />;
     }
-  }
+  };
 
   const getRoleName = (role) => {
     switch (role) {
-      case 'seeker': return 'Job Seeker'
-      case 'employer': return 'Employer'
-      case 'admin': return 'Administrator'
-      default: return 'User'
+      case "seeker":
+        return "Job Seeker";
+      case "employer":
+        return "Employer";
+      case "admin":
+        return "Administrator";
+      default:
+        return "User";
     }
-  }
+  };
 
   const isActive = (path) => {
-    return location.pathname === path || 
-           (path !== '/' && location.pathname.startsWith(path))
-  }
+    return (
+      location.pathname === path ||
+      (path !== "/" && location.pathname.startsWith(path))
+    );
+  };
 
   const navLinks = [
-    { 
-      path: '/', 
-      label: 'Home', 
+    {
+      path: "/",
+      label: "Home",
       icon: <Award className="w-4 h-4" />,
-      description: 'Go to homepage'
     },
-    { 
-      path: '/jobs', 
-      label: 'Jobs', 
+    {
+      path: "/jobs",
+      label: "Jobs",
       icon: <Briefcase className="w-4 h-4" />,
-      description: 'Browse all jobs',
-      badge: '50K+'
+      badge: "50K+",
     },
-    { 
-      path: '/employers', 
-      label: 'Companies', 
+    {
+      path: "/employers",
+      label: "Companies",
       icon: <Building2 className="w-4 h-4" />,
-      description: 'Find employers'
     },
     // Role-based navigation
-    ...(user?.role === 'admin' ? [
-      { 
-        path: '/admin', 
-        label: 'Admin Panel', 
-        icon: <Shield className="w-4 h-4" />,
-        description: 'Manage platform'
-      }
-    ] : []),
-    ...(user?.role === 'employer' ? [
-      {
-        path: '/post-job',
-        label: 'Post Job',
-        icon: <Plus className="w-4 h-4" />,
-        description: 'Create new job posting',
-        highlight: true
-      }
-    ] : [])
-  ]
+    ...(user?.role === "admin"
+      ? [
+          {
+            path: "/admin",
+            label: "Admin Panel",
+            icon: <Shield className="w-4 h-4" />,
+          },
+        ]
+      : []),
+    ...(user?.role === "employer"
+      ? [
+          {
+            path: "/post-job",
+            label: "Post Job",
+            icon: <Plus className="w-4 h-4" />,
+            description: "Create new job posting",
+            highlight: true,
+          },
+        ]
+      : []),
+  ];
 
-  const unreadNotifications = notifications.filter(n => !n.read).length
-  const currentLang = languages.find(lang => lang.code === currentLanguage)
+  const unreadNotifications = notifications.filter((n) => !n.read).length;
+  const currentLang = languages.find((lang) => lang.code === currentLanguage);
 
   return (
     <>
-      <nav className={`sticky top-0 z-50 transition-all duration-300 ${
-        scrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-200' 
-          : 'bg-white border-b border-gray-100'
-      }`}>
+      <nav
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-gradient-to-r from-white via-purple-50/30 to-blue-50/20 backdrop-blur-md shadow-lg border-b border-purple-200/50"
+            : "bg-gradient-to-r from-white to-gray-50/40 border-b border-purple-100/30"
+        }`}
+      >
         <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-20">
             {/* Logo Section */}
             <div className="flex items-center space-x-8">
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="flex items-center space-x-3 group"
                 aria-label="JobBoard - Go to homepage"
               >
                 <div className="relative">
                   <div className="w-10 h-10 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-110">
-                    <span className="relative z-10">J</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
                   </div>
                   {scrolled && (
@@ -244,18 +286,18 @@ const Navbar = () => {
                 </div>
               </Link>
 
-              {/* Desktop Navigation */}
-              <div className="hidden lg:flex items-center space-x-1">
+              {/* Desktop Navigation - Hidden below 760px */}
+              <div className="desktop-flex hidden items-center space-x-1">
                 {navLinks.map((link) => (
                   <Link
                     key={link.path}
                     to={link.path}
                     className={`group relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                       isActive(link.path)
-                        ? 'text-blue-600 bg-blue-50 shadow-sm'
+                        ? "text-blue-600 bg-blue-50 shadow-sm"
                         : link.highlight
-                        ? 'text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-sm'
-                        : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                        ? "text-white bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 shadow-sm"
+                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
                     }`}
                   >
                     <div className="flex items-center space-x-2">
@@ -267,12 +309,12 @@ const Navbar = () => {
                         </span>
                       )}
                     </div>
-                    
+
                     {/* Active indicator */}
                     {isActive(link.path) && (
                       <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-600 rounded-full"></div>
                     )}
-                    
+
                     {/* Hover tooltip */}
                     <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-gray-900 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-50">
                       {link.description}
@@ -284,81 +326,150 @@ const Navbar = () => {
             </div>
 
             {/* Right Section */}
-            <div className="flex items-center space-x-3">
-              {/* Enhanced Search */}
-              <div className="hidden xl:flex items-center">
+            <div className="flex items-center space-x-4">
+              {/* Professional Search Bar - Hidden below 760px */}
+              <div className="desktop-flex hidden items-center">
                 <div className="relative group">
-                  <button 
-                    onClick={() => navigate('/jobs')}
-                    className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-all duration-200 group-hover:shadow-md"
-                    aria-label="Search jobs"
-                  >
-                    <Search className="w-4 h-4 group-hover:text-blue-600 transition-colors" />
-                    <span className="hidden 2xl:block text-gray-500 group-hover:text-gray-700">Search jobs...</span>
-                  </button>
-                  <kbd className="absolute -top-8 right-0 px-2 py-1 text-xs text-gray-500 bg-white border border-gray-200 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-                    ⌘K
-                  </kbd>
+                  <div className="flex items-center bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden">
+                    {/* Search Input */}
+                    <div className="flex items-center px-4 py-2.5 bg-gradient-to-r from-gray-50 to-white">
+                      <Search className="w-4 h-4 text-gray-400 mr-3" />
+                      <input
+                        type="text"
+                        placeholder="Search jobs, companies..."
+                        className="navbar-search-input bg-transparent text-sm text-gray-700 placeholder-gray-400 focus:outline-none w-48 xl:w-64"
+                        onFocus={() => navigate("/jobs")}
+                      />
+                    </div>
+                    
+                    {/* Location Select */}
+                    <div className="hidden xl:flex items-center px-4 py-2.5 border-l border-gray-200 bg-gradient-to-r from-white to-gray-50">
+                      <div className="flex items-center space-x-2 text-sm text-gray-600">
+                        <span className="text-gray-400">📍</span>
+                        <select className="bg-transparent focus:outline-none cursor-pointer">
+                          <option value="">All Cities</option>
+                          <option value="tashkent">Tashkent</option>
+                          <option value="samarkand">Samarkand</option>
+                          <option value="bukhara">Bukhara</option>
+                        </select>
+                        <ChevronDown className="w-3 h-3 text-gray-400" />
+                      </div>
+                    </div>
+                    
+                    {/* Search Button */}
+                    <button
+                      onClick={() => navigate("/jobs")}
+                      className="navbar-button px-6 py-2.5 bg-gradient-to-r from-primary-600 to-primary-700 text-white font-medium hover:from-primary-700 hover:to-primary-800 transition-all duration-200 hover:shadow-lg"
+                      aria-label="Search jobs"
+                    >
+                      <span className="hidden lg:block">Search</span>
+                      <Search className="w-4 h-4 lg:hidden" />
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Language Selector */}
+              {/* Professional Language Selector */}
               <div className="relative language-dropdown">
                 <button
                   onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
-                  className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-all duration-200"
+                  className="navbar-button flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-200 hover:border-primary-300 hover:bg-gray-50 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md group"
                   aria-label="Select language"
                 >
+                  <Globe className="w-4 h-4 text-gray-500 group-hover:text-primary-600" />
                   <span className="text-lg">{currentLang?.flag}</span>
-                  <span className="hidden sm:block font-medium">{currentLang?.code.toUpperCase()}</span>
-                  <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${showLanguageDropdown ? 'rotate-180' : ''}`} />
+                  <span className="hidden sm:block font-medium text-gray-700">
+                    {currentLang?.code.toUpperCase()}
+                  </span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${
+                      showLanguageDropdown ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
 
                 {showLanguageDropdown && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-xl shadow-xl py-2 z-50 animate-scale-in">
-                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide border-b border-gray-100">
-                      Choose Language
+                  <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl py-3 z-50 animate-scale-in dropdown-enter-active">
+                    <div className="px-4 py-3 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+                      <div className="flex items-center space-x-2">
+                        <Languages className="w-4 h-4 text-primary-600" />
+                        <span className="text-sm font-semibold text-gray-800">Choose Language</span>
+                      </div>
                     </div>
-                    {languages.map((lang) => (
-                      <button
-                        key={lang.code}
-                        onClick={() => handleLanguageChange(lang.code)}
-                        className="flex items-center space-x-3 w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                      >
-                        <span className="text-lg">{lang.flag}</span>
-                        <div className="flex-1 text-left">
-                          <div className="font-medium">{lang.nativeName}</div>
-                          <div className="text-xs text-gray-500">{lang.name}</div>
-                        </div>
-                        {currentLanguage === lang.code && (
-                          <Check className="w-4 h-4 text-blue-600" />
-                        )}
-                      </button>
-                    ))}
+                    <div className="py-2">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => handleLanguageChange(lang.code)}
+                          className={`language-option flex items-center space-x-3 w-full px-4 py-3 text-sm transition-all duration-200 group ${
+                            currentLanguage === lang.code ? 'active' : ''
+                          }`}
+                        >
+                          <span className="text-xl">{lang.flag}</span>
+                          <div className="flex-1 text-left">
+                            <div className="font-medium text-gray-800 group-hover:text-primary-700">
+                              {lang.nativeName}
+                            </div>
+                            <div className="text-xs text-gray-500 group-hover:text-gray-600">
+                              {lang.name}
+                            </div>
+                          </div>
+                          {currentLanguage === lang.code && (
+                            <div className="flex items-center space-x-1">
+                              <Check className="w-4 h-4 text-primary-600" />
+                              <span className="text-xs font-medium text-primary-600">Active</span>
+                            </div>
+                          )}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
 
-              {/* Theme Toggle */}
-              <button
-                onClick={toggleTheme}
-                className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-all duration-200"
-                aria-label="Toggle theme"
-              >
-                {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-              </button>
+              {/* Professional Theme Toggle - Desktop */}
+              <div className="desktop-flex hidden">
+                <button
+                  onClick={toggleTheme}
+                  className="navbar-button flex items-center space-x-2 px-4 py-2.5 text-sm text-gray-700 bg-white border border-gray-200 hover:border-primary-300 hover:bg-gray-50 rounded-xl transition-all duration-200 shadow-sm hover:shadow-md group"
+                  aria-label="Toggle theme"
+                  title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+                >
+                  <div className="relative w-5 h-5">
+                    {theme === "light" ? (
+                      <Moon className="w-5 h-5 text-gray-500 group-hover:text-primary-600 transition-colors" />
+                    ) : (
+                      <Sun className="w-5 h-5 text-yellow-500 group-hover:text-yellow-600 transition-colors" />
+                    )}
+                  </div>
+                  <span className="hidden lg:block font-medium text-gray-700 group-hover:text-primary-700">
+                    {theme === "light" ? "Dark" : "Light"}
+                  </span>
+                  <div
+                    className={`theme-toggle-track w-8 h-4 rounded-full p-0.5 ${
+                      theme === "dark" ? "dark" : ""
+                    }`}
+                  >
+                    <div
+                      className={`theme-toggle-thumb w-3 h-3 bg-white rounded-full ${
+                        theme === "dark" ? "translate-x-4" : "translate-x-0"
+                      }`}
+                    ></div>
+                  </div>
+                </button>
+              </div>
 
               {/* Notifications */}
               {user && (
                 <div className="relative notifications-dropdown">
-                  <button 
+                  <button
                     onClick={() => setShowNotifications(!showNotifications)}
                     className="relative p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-all duration-200"
                     aria-label="Notifications"
                   >
                     <Bell className="w-5 h-5" />
                     {unreadNotifications > 0 && (
-                      <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs rounded-full flex items-center justify-center font-bold animate-bounce">
+                      <span className="notification-badge absolute -top-1 -right-1 w-5 h-5 text-white text-xs rounded-full flex items-center justify-center font-bold">
                         {unreadNotifications}
                       </span>
                     )}
@@ -367,21 +478,23 @@ const Navbar = () => {
                   {showNotifications && (
                     <div className="absolute right-0 mt-2 w-80 bg-white border border-gray-200 rounded-xl shadow-xl py-2 z-50 animate-scale-in">
                       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
-                        <h3 className="font-semibold text-gray-900">Notifications</h3>
+                        <h3 className="font-semibold text-gray-900">
+                          Notifications
+                        </h3>
                         {unreadNotifications > 0 && (
                           <span className="px-2 py-1 text-xs font-bold text-blue-600 bg-blue-100 rounded-full">
                             {unreadNotifications} new
                           </span>
                         )}
                       </div>
-                      
-                      <div className="max-h-96 overflow-y-auto">
+
+                      <div className="max-h-96 overflow-y-auto custom-scrollbar">
                         {notifications.length > 0 ? (
                           notifications.map((notification) => (
                             <div
                               key={notification.id}
                               className={`flex items-start space-x-3 px-4 py-3 hover:bg-gray-50 cursor-pointer transition-colors ${
-                                !notification.read ? 'bg-blue-50' : ''
+                                !notification.read ? "bg-blue-50" : ""
                               }`}
                             >
                               <div className="flex-shrink-0 mt-1">
@@ -410,7 +523,7 @@ const Navbar = () => {
                           </div>
                         )}
                       </div>
-                      
+
                       {notifications.length > 0 && (
                         <div className="border-t border-gray-100 px-4 py-2">
                           <button className="text-sm text-blue-600 hover:text-blue-700 font-medium">
@@ -434,7 +547,7 @@ const Navbar = () => {
                   >
                     <div className="relative">
                       <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform duration-200">
-                        {user.name?.charAt(0)?.toUpperCase() || 'U'}
+                        {user.name?.charAt(0)?.toUpperCase() || "U"}
                       </div>
                       <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                     </div>
@@ -447,7 +560,11 @@ const Navbar = () => {
                         <span>{getRoleName(user.role)}</span>
                       </div>
                     </div>
-                    <ChevronDown className={`hidden lg:block w-4 h-4 text-gray-500 transition-transform duration-200 ${showUserDropdown ? 'rotate-180' : ''}`} />
+                    <ChevronDown
+                      className={`hidden lg:block w-4 h-4 text-gray-500 transition-transform duration-200 ${
+                        showUserDropdown ? "rotate-180" : ""
+                      }`}
+                    />
                   </button>
 
                   {/* Enhanced User Dropdown */}
@@ -457,11 +574,15 @@ const Navbar = () => {
                       <div className="px-4 py-4 border-b border-gray-100">
                         <div className="flex items-center space-x-3">
                           <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                            {user.name?.charAt(0)?.toUpperCase() || 'U'}
+                            {user.name?.charAt(0)?.toUpperCase() || "U"}
                           </div>
                           <div className="flex-1">
-                            <div className="font-semibold text-gray-900">{user.name}</div>
-                            <div className="text-sm text-gray-500">{user.email}</div>
+                            <div className="font-semibold text-gray-900">
+                              {user.name}
+                            </div>
+                            <div className="text-sm text-gray-500">
+                              {user.email}
+                            </div>
                             <div className="flex items-center space-x-1 text-xs text-gray-500 mt-1">
                               {getRoleIcon(user.role)}
                               <span>{getRoleName(user.role)}</span>
@@ -471,20 +592,32 @@ const Navbar = () => {
                       </div>
 
                       {/* Quick Stats (for job seekers) */}
-                      {user.role === 'seeker' && (
+                      {user.role === "seeker" && (
                         <div className="px-4 py-3 border-b border-gray-100">
                           <div className="grid grid-cols-3 gap-4 text-center">
                             <div>
-                              <div className="text-lg font-bold text-gray-900">12</div>
-                              <div className="text-xs text-gray-500">Applications</div>
+                              <div className="text-lg font-bold text-gray-900">
+                                12
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                Applications
+                              </div>
                             </div>
                             <div>
-                              <div className="text-lg font-bold text-gray-900">3</div>
-                              <div className="text-xs text-gray-500">Interviews</div>
+                              <div className="text-lg font-bold text-gray-900">
+                                3
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                Interviews
+                              </div>
                             </div>
                             <div>
-                              <div className="text-lg font-bold text-gray-900">85%</div>
-                              <div className="text-xs text-gray-500">Profile</div>
+                              <div className="text-lg font-bold text-gray-900">
+                                85%
+                              </div>
+                              <div className="text-xs text-gray-500">
+                                Profile
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -503,7 +636,7 @@ const Navbar = () => {
                         </Link>
 
                         {/* Role-specific menu items */}
-                        {user.role === 'seeker' && (
+                        {user.role === "seeker" && (
                           <>
                             <Link
                               to="/dashboard/seeker?tab=saved"
@@ -512,7 +645,9 @@ const Navbar = () => {
                             >
                               <Heart className="w-5 h-5 text-red-500" />
                               <span className="flex-1">Saved Jobs</span>
-                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">5</span>
+                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                5
+                              </span>
                             </Link>
                             <Link
                               to="/dashboard/seeker?tab=applications"
@@ -521,12 +656,14 @@ const Navbar = () => {
                             >
                               <Briefcase className="w-5 h-5 text-green-600" />
                               <span className="flex-1">My Applications</span>
-                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">12</span>
+                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                12
+                              </span>
                             </Link>
                           </>
                         )}
 
-                        {user.role === 'employer' && (
+                        {user.role === "employer" && (
                           <>
                             <Link
                               to="/dashboard/employer?tab=jobs"
@@ -535,7 +672,9 @@ const Navbar = () => {
                             >
                               <Briefcase className="w-5 h-5 text-blue-600" />
                               <span className="flex-1">My Job Posts</span>
-                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">8</span>
+                              <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                                8
+                              </span>
                             </Link>
                             <Link
                               to="/dashboard/employer?tab=applications"
@@ -544,7 +683,9 @@ const Navbar = () => {
                             >
                               <Users className="w-5 h-5 text-purple-600" />
                               <span className="flex-1">Applications</span>
-                              <span className="text-xs text-white bg-red-500 px-2 py-1 rounded-full">24</span>
+                              <span className="text-xs text-white bg-red-500 px-2 py-1 rounded-full">
+                                24
+                              </span>
                             </Link>
                           </>
                         )}
@@ -601,141 +742,278 @@ const Navbar = () => {
                 </div>
               )}
 
-              {/* Mobile Menu Button */}
+              {/* Mobile Menu Button - Only shows below 760px */}
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="lg:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-xl transition-all duration-200 mobile-menu"
+                className="mobile-flex hidden p-3 text-gray-600 hover:text-gray-900 hover:bg-primary-50 rounded-xl transition-all duration-200 mobile-menu-button relative z-50"
                 aria-label="Toggle mobile menu"
               >
                 <div className="w-6 h-6 relative">
-                  <span className={`absolute inset-0 transition-all duration-300 ${isOpen ? 'rotate-45' : ''}`}>
-                    {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                  <span
+                    className={`absolute inset-0 transition-all duration-300 ${
+                      isOpen ? "rotate-45" : ""
+                    }`}
+                  >
+                    {isOpen ? (
+                      <X className="w-6 h-6" />
+                    ) : (
+                      <Menu className="w-6 h-6" />
+                    )}
                   </span>
                 </div>
               </button>
             </div>
           </div>
 
-          {/* Enhanced Mobile Navigation */}
-          {isOpen && (
-            <div className="lg:hidden border-t border-gray-100 py-4 mobile-menu animate-slide-down">
-              <div className="flex flex-col space-y-1">
-                {/* Mobile Search */}
-                <button 
-                  onClick={() => {
-                    navigate('/jobs')
-                    setIsOpen(false)
-                  }}
-                  className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-gray-50 rounded-xl transition-colors mx-2"
-                >
-                  <Search className="w-5 h-5 text-blue-600" />
-                  <span>Search Jobs</span>
-                  <div className="ml-auto text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">⌘K</div>
-                </button>
+          {/* Professional Mobile Side Menu - Only below 760px */}
+          <div
+            className={`mobile-menu-professional fixed inset-y-0 right-0 w-80 shadow-2xl transform transition-transform duration-300 ease-in-out z-50 mobile-show hidden ${
+              isOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            {/* Mobile Menu Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-100 bg-gradient-to-r from-primary-50 to-primary-100">
+              <div className="flex items-center space-x-3">
+                <div>
+                  <div className="text-lg font-bold text-gray-900">
+                    JobBoard
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    Find your dream job
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-2 text-gray-500 hover:text-gray-700 hover:bg-white rounded-lg transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
-                {/* Navigation Links */}
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.path}
-                    to={link.path}
-                    onClick={() => setIsOpen(false)}
-                    className={`flex items-center space-x-3 px-4 py-3 mx-2 rounded-xl text-sm font-medium transition-colors ${
-                      isActive(link.path)
-                        ? 'text-blue-600 bg-blue-50'
-                        : link.highlight
-                        ? 'text-white bg-gradient-to-r from-green-500 to-green-600'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    {link.icon}
-                    <span className="flex-1">{link.label}</span>
-                    {link.badge && (
-                      <span className="px-2 py-1 text-xs font-bold text-blue-600 bg-blue-100 rounded-full">
-                        {link.badge}
-                      </span>
-                    )}
-                  </Link>
-                ))}
-
-                {/* Mobile User Section */}
-                {user ? (
-                  <div className="border-t border-gray-100 pt-4 mt-4 mx-2">
-                    {/* User Profile Header */}
-                    <div className="flex items-center space-x-3 px-4 py-3 bg-gray-50 rounded-xl mb-3">
-                      <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-bold">
-                        {user.name?.charAt(0)?.toUpperCase() || 'U'}
+            {/* Mobile Menu Content */}
+            <div className="flex flex-col h-full">
+              {/* User Profile Section (if logged in) */}
+              {user && (
+                <div className="p-6 bg-primary-50 border-b border-primary-100">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-gradient-to-r from-primary-600 to-primary-500 rounded-2xl flex items-center justify-center text-white font-bold">
+                      {user.name?.charAt(0)?.toUpperCase() || "U"}
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-bold text-gray-900">{user.name}</div>
+                      <div className="text-sm text-gray-600 flex items-center space-x-1">
+                        {getRoleIcon(user.role)}
+                        <span>{getRoleName(user.role)}</span>
                       </div>
-                      <div className="flex-1">
-                        <div className="font-medium text-gray-900">{user.name}</div>
-                        <div className="text-sm text-gray-500 flex items-center space-x-1">
-                          {getRoleIcon(user.role)}
-                          <span>{getRoleName(user.role)}</span>
+                    </div>
+                  </div>
+
+                  {/* Quick Stats for job seekers */}
+                  {user.role === "seeker" && (
+                    <div className="grid grid-cols-3 gap-3 mt-4">
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-primary-700">
+                          12
+                        </div>
+                        <div className="text-xs text-gray-600">
+                          Applications
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-primary-700">
+                          3
+                        </div>
+                        <div className="text-xs text-gray-600">Interviews</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-lg font-bold text-primary-700">
+                          85%
+                        </div>
+                        <div className="text-xs text-gray-600">Profile</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Professional Mobile Search */}
+              <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white">
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Search className="w-4 h-4 text-primary-600" />
+                    <span className="text-sm font-semibold text-gray-800">Quick Search</span>
+                  </div>
+                  
+                  <button
+                    onClick={() => {
+                      navigate("/jobs");
+                      setIsOpen(false);
+                    }}
+                    className="flex items-center space-x-3 w-full px-4 py-3.5 text-gray-700 bg-white border border-gray-200 hover:border-primary-300 hover:bg-gradient-to-r hover:from-primary-50 hover:to-blue-50 rounded-2xl transition-all duration-200 shadow-sm hover:shadow-md group"
+                  >
+                    <div className="flex items-center space-x-3 flex-1">
+                      <Search className="w-5 h-5 text-gray-400 group-hover:text-primary-600" />
+                      <div className="text-left">
+                        <div className="text-sm font-medium text-gray-700 group-hover:text-primary-700">
+                          Search Jobs & Companies
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          Find your perfect opportunity
                         </div>
                       </div>
                     </div>
+                    <div className="flex items-center space-x-1 text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-lg">
+                      <span>⌘</span>
+                      <span>K</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
 
-                    {/* Mobile User Menu Items */}
-                    <div className="space-y-1">
+              {/* Navigation Links */}
+              <div className="flex-1 overflow-y-auto p-6">
+                <div className="space-y-2">
+                  <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                    Navigation
+                  </div>
+
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.path}
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className={`flex items-center space-x-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                        isActive(link.path)
+                          ? "text-primary-700 bg-primary-100 border-2 border-primary-200 shadow-sm"
+                          : link.highlight
+                          ? "text-white bg-gradient-to-r from-green-500 to-green-600 shadow-md"
+                          : "text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+                      }`}
+                    >
+                      {link.icon}
+                      <span className="flex-1">{link.label}</span>
+                      {link.badge && (
+                        <span className="px-2 py-1 text-xs font-bold text-primary-600 bg-primary-100 rounded-full">
+                          {link.badge}
+                        </span>
+                      )}
+                      {isActive(link.path) && (
+                        <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
+                      )}
+                    </Link>
+                  ))}
+                </div>
+
+                {/* User Menu Items (if logged in) */}
+                {user && (
+                  <div className="mt-8">
+                    <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
+                      Account
+                    </div>
+                    <div className="space-y-2">
                       <Link
                         to={getDashboardLink()}
                         onClick={() => setIsOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 rounded-xl transition-colors"
+                        className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-xl transition-colors"
                       >
-                        <BarChart3 className="w-5 h-5 text-blue-600" />
+                        <BarChart3 className="w-5 h-5 text-primary-600" />
                         <span>Dashboard</span>
                       </Link>
+
+                      {/* Role-specific items */}
+                      {user.role === "seeker" && (
+                        <>
+                          <Link
+                            to="/dashboard/seeker?tab=saved"
+                            onClick={() => setIsOpen(false)}
+                            className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-xl transition-colors"
+                          >
+                            <Heart className="w-5 h-5 text-red-500" />
+                            <span className="flex-1">Saved Jobs</span>
+                            <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                              5
+                            </span>
+                          </Link>
+                          <Link
+                            to="/dashboard/seeker?tab=applications"
+                            onClick={() => setIsOpen(false)}
+                            className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-xl transition-colors"
+                          >
+                            <Briefcase className="w-5 h-5 text-green-600" />
+                            <span className="flex-1">My Applications</span>
+                            <span className="text-xs text-white bg-green-500 px-2 py-1 rounded-full">
+                              12
+                            </span>
+                          </Link>
+                        </>
+                      )}
+
+                      {user.role === "employer" && (
+                        <>
+                          <Link
+                            to="/dashboard/employer?tab=jobs"
+                            onClick={() => setIsOpen(false)}
+                            className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-xl transition-colors"
+                          >
+                            <Briefcase className="w-5 h-5 text-primary-600" />
+                            <span className="flex-1">My Job Posts</span>
+                            <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                              8
+                            </span>
+                          </Link>
+                          <Link
+                            to="/dashboard/employer?tab=applications"
+                            onClick={() => setIsOpen(false)}
+                            className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-xl transition-colors"
+                          >
+                            <Users className="w-5 h-5 text-purple-600" />
+                            <span className="flex-1">Applications</span>
+                            <span className="text-xs text-white bg-red-500 px-2 py-1 rounded-full">
+                              24
+                            </span>
+                          </Link>
+                        </>
+                      )}
 
                       <Link
                         to="/profile"
                         onClick={() => setIsOpen(false)}
-                        className="flex items-center space-x-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 rounded-xl transition-colors"
+                        className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-xl transition-colors"
                       >
                         <Settings className="w-5 h-5 text-gray-600" />
-                        <span>Settings</span>
+                        <span>Settings & Privacy</span>
                       </Link>
 
-                      <button
-                        onClick={() => {
-                          handleLogout()
-                          setIsOpen(false)
-                        }}
-                        className="flex items-center space-x-3 w-full px-4 py-3 text-sm text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+                      <Link
+                        to="/help"
+                        onClick={() => setIsOpen(false)}
+                        className="flex items-center space-x-3 px-4 py-3 text-gray-700 hover:bg-primary-50 hover:text-primary-600 rounded-xl transition-colors"
                       >
-                        <LogOut className="w-5 h-5" />
-                        <span>Sign Out</span>
-                      </button>
+                        <HelpCircle className="w-5 h-5 text-gray-600" />
+                        <span>Help & Support</span>
+                      </Link>
                     </div>
                   </div>
-                ) : (
-                  <div className="border-t border-gray-100 pt-4 mt-4 mx-2 space-y-2">
-                    <Link
-                      to="/login"
-                      onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 text-center text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-xl transition-colors"
-                    >
-                      Sign In
-                    </Link>
-                    <Link
-                      to="/register"
-                      onClick={() => setIsOpen(false)}
-                      className="block px-4 py-3 text-center text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 rounded-xl transition-all"
-                    >
-                      Get Started Free
-                    </Link>
-                  </div>
                 )}
+              </div>
 
-                {/* Mobile Language & Theme */}
-                <div className="border-t border-gray-100 pt-4 mt-4 mx-2">
-                  <div className="flex items-center justify-between px-4 py-2">
+              {/* Bottom Section */}
+              <div className="p-6 border-t border-gray-100 bg-gray-50">
+                {/* Language & Theme Controls */}
+                <div className="space-y-3 mb-4">
+                  {/* Language Selector */}
+                  <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <Globe className="w-5 h-5 text-gray-600" />
-                      <span className="text-sm text-gray-700">Language</span>
+                      <span className="text-sm text-gray-700 font-medium">
+                        Language
+                      </span>
                     </div>
                     <select
                       value={currentLanguage}
                       onChange={(e) => handleLanguageChange(e.target.value)}
-                      className="text-sm text-gray-700 bg-transparent border-0 focus:outline-none"
+                      className="text-sm text-gray-700 bg-white border border-gray-200 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary-500"
                     >
                       {languages.map((lang) => (
                         <option key={lang.code} value={lang.code}>
@@ -745,32 +1023,78 @@ const Navbar = () => {
                     </select>
                   </div>
 
+                  {/* Theme Toggle */}
                   <button
                     onClick={toggleTheme}
-                    className="flex items-center justify-between w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-xl transition-colors"
+                    className="flex items-center justify-between w-full text-sm text-gray-700 hover:text-primary-600 transition-colors"
                   >
                     <div className="flex items-center space-x-3">
-                      {theme === 'light' ? <Moon className="w-5 h-5 text-gray-600" /> : <Sun className="w-5 h-5 text-gray-600" />}
-                      <span>Theme</span>
+                      {theme === "light" ? (
+                        <Moon className="w-5 h-5 text-gray-600" />
+                      ) : (
+                        <Sun className="w-5 h-5 text-gray-600" />
+                      )}
+                      <span className="font-medium">Dark Mode</span>
                     </div>
-                    <span className="text-xs text-gray-500 capitalize">{theme}</span>
+                    <div
+                      className={`w-10 h-6 bg-gray-200 rounded-full p-1 transition-colors ${
+                        theme === "dark" ? "bg-primary-500" : ""
+                      }`}
+                    >
+                      <div
+                        className={`w-4 h-4 bg-white rounded-full transition-transform ${
+                          theme === "dark" ? "translate-x-4" : ""
+                        }`}
+                      ></div>
+                    </div>
                   </button>
                 </div>
+
+                {/* Auth Buttons or Logout */}
+                {user ? (
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setIsOpen(false);
+                    }}
+                    className="flex items-center space-x-3 w-full px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+                  >
+                    <LogOut className="w-5 h-5" />
+                    <span className="font-medium">Sign Out</span>
+                  </button>
+                ) : (
+                  <div className="space-y-3">
+                    <Link
+                      to="/login"
+                      onClick={() => setIsOpen(false)}
+                      className="block w-full px-4 py-3 text-center text-sm font-medium text-gray-700 border border-gray-300 hover:bg-gray-100 rounded-xl transition-colors"
+                    >
+                      Sign In
+                    </Link>
+                    <Link
+                      to="/register"
+                      onClick={() => setIsOpen(false)}
+                      className="block w-full px-4 py-3 text-center text-sm font-bold text-white bg-gradient-to-r from-primary-600 to-primary-500 hover:from-primary-700 hover:to-primary-600 rounded-xl transition-all shadow-md"
+                    >
+                      Get Started Free
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
-          )}
+          </div>
         </div>
       </nav>
 
-      {/* Enhanced Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Only below 760px */}
       {isOpen && (
-        <div 
-          className="fixed inset-0 bg-black bg-opacity-25 z-40 lg:hidden transition-opacity duration-300"
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40 mobile-show hidden transition-opacity duration-300 mobile-menu-overlay"
           onClick={() => setIsOpen(false)}
         />
       )}
     </>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
