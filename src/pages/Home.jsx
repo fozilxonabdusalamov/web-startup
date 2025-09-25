@@ -389,24 +389,7 @@ const Home = () => {
             </div>
 
             {/* Hero Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto">
-              {[
-                { label: "Faol vakansiyalar", value: "48K+", icon: Briefcase },
-                { label: "Kompaniyalar", value: "4.8K+", icon: Building2 },
-                { label: "Foydalanuvchilar", value: "185K+", icon: Users },
-                { label: "Muvaffaqiyat %", value: "94%", icon: Trophy },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center">
-                  <div className="w-12 h-12 bg-white rounded-lg shadow-md flex items-center justify-center mx-auto mb-3">
-                    <stat.icon className="text-blue-600" size={24} />
-                  </div>
-                  <div className="text-2xl font-bold text-gray-900">
-                    {stat.value}
-                  </div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+            
           </div>
         </div>
       </section>
