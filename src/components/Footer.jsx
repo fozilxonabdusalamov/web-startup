@@ -100,42 +100,6 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-900 text-white">
-      {/* Newsletter Section */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-700">
-        <div className="container py-12">
-          <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-2xl font-bold mb-4">
-              Eng so'nggi vakansiyalardan birinchi bo'lib xabardor bo'ling
-            </h3>
-            <p className="text-blue-100 mb-8 text-lg">
-              Haftada 50,000+ yangi vakansiya. Siz uchun eng mos ishlarni topib
-              beramiz.
-            </p>
-            <form className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
-              <input
-                type="email"
-                placeholder="Email manzilingizni kiriting"
-                className="flex-1 px-6 py-3 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
-                required
-              />
-              <button
-                type="submit"
-                className="px-8 py-3 bg-white text-blue-600 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
-              >
-                Obuna bo'lish
-              </button>
-            </form>
-            <p className="text-xs text-blue-200 mt-3">
-              Obuna bo'lish orqali siz bizning{" "}
-              <Link to="/privacy" className="underline hover:text-white">
-                maxfiylik siyosatimiz
-              </Link>
-              ga rozilik bildirasiz.
-            </p>
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer */}
       <div className="container py-16">
         <div className="grid grid-cols-4 md:grid-cols-2 lg:grid-cols-5 gap-8">
