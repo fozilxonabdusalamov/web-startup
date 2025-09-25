@@ -54,7 +54,6 @@ const Navbar = () => {
     { code: "uz", name: "O'zbekcha", flag: "🇺🇿", nativeName: "O'zbekcha" },
     { code: "ru", name: "Русский", flag: "🇷🇺", nativeName: "Русский" },
     { code: "en", name: "English", flag: "🇺🇸", nativeName: "English" },
-    { code: "tr", name: "Türkçe", flag: "🇹🇷", nativeName: "Türkçe" },
   ];
 
   // Mock user state and notifications
