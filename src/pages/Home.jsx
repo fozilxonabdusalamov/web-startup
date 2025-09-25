@@ -775,51 +775,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-gray-900 to-gray-800 text-white">
-        <div className="container text-center">
-          <h2 className="text-3xl lg:text-4xl font-bold mb-6">
-            Karyerangizni bugun boshlang!
-          </h2>
-          <p className="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
-            50,000+ vakansiya, 4,800+ kompaniya va minglab muvaffaqiyat hikoyasi
-            sizni kutmoqda. Bepul ro'yxatdan o'ting va orzuingizdagi ishni
-            toping.
-          </p>
 
-          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-            <Link
-              to="/register?role=seeker"
-              className="btn btn-primary btn-lg inline-flex items-center space-x-2 px-8 py-4"
-            >
-              <UserCheck size={20} />
-              <span>Ish izlovchi sifatida</span>
-            </Link>
-            <Link
-              to="/register?role=employer"
-              className="btn btn-outline btn-lg inline-flex items-center space-x-2 px-8 py-4 text-white border-white hover:bg-white hover:text-gray-900"
-            >
-              <Building2 size={20} />
-              <span>Ish beruvchi sifatida</span>
-            </Link>
-          </div>
-
-          <div className="mt-8 flex items-center justify-center space-x-6 text-sm text-gray-400">
-            <div className="flex items-center space-x-2">
-              <CheckCircle size={16} />
-              <span>Bepul ro'yxatdan o'tish</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <CheckCircle size={16} />
-              <span>Email tasdiqlanmadi</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <CheckCircle size={16} />
-              <span>Darhol ishlatishga tayyor</span>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
