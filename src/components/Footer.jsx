@@ -274,34 +274,6 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-
-        {/* Stats Section */}
-        <div className="mt-16 pt-12 border-t border-gray-800">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-3xl font-bold text-blue-400 mb-2">50K+</div>
-              <div className="text-gray-300 text-sm">Faol vakansiyalar</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-green-400 mb-2">
-                200K+
-              </div>
-              <div className="text-gray-300 text-sm">
-                Ro'yxatdan o'tgan foydalanuvchilar
-              </div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-purple-400 mb-2">5K+</div>
-              <div className="text-gray-300 text-sm">Kompaniyalar</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-yellow-400 mb-2">95%</div>
-              <div className="text-gray-300 text-sm">
-                Muvaffaqiyatli joylashish
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Bottom Bar */}
