@@ -389,7 +389,6 @@ const Home = () => {
             </div>
 
             {/* Hero Stats */}
-            
           </div>
         </div>
       </section>
@@ -443,7 +442,7 @@ const Home = () => {
               <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
                 Tanlangan vakansiyalar
               </h2>
-              <p className="text-xl text-gray-600">
+              <p className="text-xl pt-4 pb-6 text-gray-600">
                 Eng yaxshi kompaniyalardan maxsus tanlov
               </p>
             </div>
@@ -774,8 +773,6 @@ const Home = () => {
           )}
         </div>
       </section>
-
-
     </div>
   );
 };
