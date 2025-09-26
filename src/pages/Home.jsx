@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Search,
   MapPin,
@@ -45,17 +45,12 @@ import {
 } from "lucide-react";
 
 const Home = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [location, setLocation] = useState("");
   const [featuredJobs, setFeaturedJobs] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [stats, setStats] = useState({});
   const [testimonials, setTestimonials] = useState([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const [isVisible, setIsVisible] = useState({});
-  const navigate = useNavigate();
   const heroRef = useRef(null);
-  const statsRef = useRef(null);
 
   // Animation observer
   useEffect(() => {
@@ -228,13 +223,6 @@ const Home = () => {
         },
       ]);
 
-      setStats({
-        totalJobs: 48750,
-        totalUsers: 185420,
-        totalCompanies: 4850,
-        successRate: 94,
-      });
-
       setTestimonials([
         {
           id: 1,
@@ -279,23 +267,6 @@ const Home = () => {
       return () => clearInterval(interval);
     }
   }, [testimonials.length]);
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    const params = new URLSearchParams();
-    if (searchQuery) params.append("query", searchQuery);
-    if (location) params.append("location", location);
-    navigate(`/jobs?${params.toString()}`);
-  };
-
-  const quickSearchTags = [
-    "React Developer",
-    "UX Designer",
-    "Project Manager",
-    "Data Scientist",
-    "DevOps Engineer",
-    "Marketing Manager",
-  ];
 
   const features = [
     {
@@ -592,7 +563,6 @@ const Home = () => {
       </section>
 
       {/* Statistics */}
-   
 
       {/* Benefits */}
       <section className="py-20 bg-gray-50">
@@ -702,7 +672,6 @@ const Home = () => {
           )}
         </div>
       </section>
-      
     </div>
   );
 };

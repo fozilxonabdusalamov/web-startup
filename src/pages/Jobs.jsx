@@ -420,7 +420,7 @@ const Jobs = () => {
                   </div>
                 ))
               ) : jobs.length > 0 ? (
-                jobs.map((job, index) => (
+                jobs.map((job) => (
                   <div 
                     key={job.id} 
                     className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group border border-gray-100 hover:border-primary-200"
