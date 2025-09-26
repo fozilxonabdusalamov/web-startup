@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Search,
@@ -43,127 +43,139 @@ import {
   ThumbsUp,
   MessageSquare,
 } from "lucide-react";
+import "./Home.css";
 
 const Home = () => {
   const [featuredJobs, setFeaturedJobs] = useState([]);
   const [categories, setCategories] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
-  const [isVisible, setIsVisible] = useState({});
-  const heroRef = useRef(null);
+  const [visibleElements, setVisibleElements] = useState(new Set());
 
-  // Animation observer
+  // Animation intersection observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setIsVisible((prev) => ({ ...prev, [entry.target.id]: true }));
+            setVisibleElements((prev) => new Set([...prev, entry.target.id]));
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1, rootMargin: "50px" }
     );
 
     const elements = document.querySelectorAll("[data-animate]");
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, []);
+  }, [featuredJobs, categories]);
 
-  // Mock data
+  // Initialize data
   useEffect(() => {
-    // Simulate API calls
-    setTimeout(() => {
+    const loadData = async () => {
+      // Simulate API delay
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      // Mock featured jobs data
       setFeaturedJobs([
         {
           id: 1,
           title: "Senior React Developer",
           company: "TechSoft LLC",
           logo: "🚀",
-          location: "Toshkent",
+          location: "Toshkent, O'zbekiston",
           type: "To'liq vaqt",
-          salary: "$2000-3000",
-          postedAt: "2024-01-15",
+          salary: "$2,000-3,500",
+          postedDays: 2,
           isNew: true,
           isFeatured: true,
-          skills: ["React", "TypeScript", "Node.js"],
+          skills: ["React", "TypeScript", "Node.js", "GraphQL"],
+          description:
+            "Join our dynamic team and build cutting-edge web applications.",
         },
         {
           id: 2,
           title: "UI/UX Designer",
-          company: "Design Studio",
+          company: "Design Studio Pro",
           logo: "🎨",
-          location: "Samarqand",
+          location: "Samarqand, O'zbekiston",
           type: "Masofaviy",
-          salary: "$1500-2000",
-          postedAt: "2024-01-14",
+          salary: "$1,500-2,500",
+          postedDays: 1,
           isNew: true,
           isFeatured: true,
-          skills: ["Figma", "Adobe XD", "Prototyping"],
+          skills: ["Figma", "Adobe XD", "Prototyping", "User Research"],
+          description: "Create beautiful and intuitive user experiences.",
         },
         {
           id: 3,
           title: "Marketing Manager",
           company: "Growth Agency",
           logo: "📈",
-          location: "Toshkent",
+          location: "Toshkent, O'zbekiston",
           type: "To'liq vaqt",
-          salary: "$1800-2500",
-          postedAt: "2024-01-13",
+          salary: "$1,800-2,800",
+          postedDays: 3,
           isNew: false,
           isFeatured: true,
-          skills: ["Digital Marketing", "Analytics", "Strategy"],
+          skills: ["Digital Marketing", "Analytics", "Strategy", "SEO"],
+          description: "Drive marketing strategies for innovative companies.",
         },
         {
           id: 4,
           title: "DevOps Engineer",
           company: "Cloud Solutions",
           logo: "☁️",
-          location: "Namangan",
+          location: "Namangan, O'zbekiston",
           type: "Gibrid",
-          salary: "$2500-3500",
-          postedAt: "2024-01-12",
+          salary: "$2,500-4,000",
+          postedDays: 4,
           isNew: false,
           isFeatured: true,
-          skills: ["AWS", "Docker", "Kubernetes"],
+          skills: ["AWS", "Docker", "Kubernetes", "CI/CD"],
+          description: "Scale and optimize cloud infrastructure.",
         },
         {
           id: 5,
           title: "Data Scientist",
           company: "AI Innovations",
           logo: "🤖",
-          location: "Toshkent",
+          location: "Toshkent, O'zbekiston",
           type: "To'liq vaqt",
-          salary: "$2200-3200",
-          postedAt: "2024-01-11",
+          salary: "$2,200-3,800",
+          postedDays: 5,
           isNew: false,
           isFeatured: true,
-          skills: ["Python", "Machine Learning", "SQL"],
+          skills: ["Python", "Machine Learning", "SQL", "TensorFlow"],
+          description: "Unlock insights from complex data sets.",
         },
         {
           id: 6,
           title: "Mobile Developer",
           company: "App Factory",
           logo: "📱",
-          location: "Andijon",
+          location: "Andijon, O'zbekiston",
           type: "Masofaviy",
-          salary: "$1800-2800",
-          postedAt: "2024-01-10",
+          salary: "$1,800-3,200",
+          postedDays: 7,
           isNew: false,
           isFeatured: true,
-          skills: ["Flutter", "React Native", "iOS"],
+          skills: ["Flutter", "React Native", "iOS", "Android"],
+          description: "Build next-generation mobile applications.",
         },
       ]);
 
+      // Mock categories data
       setCategories([
         {
           id: 1,
           name: "IT va Texnologiya",
-          slug: "it",
+          slug: "technology",
           icon: Code,
           jobs: 12450,
-          color: "bg-blue-100 text-blue-800",
+          color: "text-blue-600",
+          description: "Dasturlash, web-development, data science",
         },
         {
           id: 2,
@@ -171,7 +183,8 @@ const Home = () => {
           slug: "design",
           icon: Palette,
           jobs: 3240,
-          color: "bg-purple-100 text-purple-800",
+          color: "text-purple-600",
+          description: "UI/UX, grafik dizayn, branding",
         },
         {
           id: 3,
@@ -179,7 +192,8 @@ const Home = () => {
           slug: "marketing",
           icon: Target,
           jobs: 5680,
-          color: "bg-green-100 text-green-800",
+          color: "text-green-600",
+          description: "Digital marketing, SMM, content",
         },
         {
           id: 4,
@@ -187,7 +201,8 @@ const Home = () => {
           slug: "finance",
           icon: Calculator,
           jobs: 4320,
-          color: "bg-yellow-100 text-yellow-800",
+          color: "text-yellow-600",
+          description: "Accounting, banking, investment",
         },
         {
           id: 5,
@@ -195,7 +210,8 @@ const Home = () => {
           slug: "education",
           icon: BookOpen,
           jobs: 2890,
-          color: "bg-indigo-100 text-indigo-800",
+          color: "text-indigo-600",
+          description: "O'qituvchi, trener, mentor",
         },
         {
           id: 6,
@@ -203,7 +219,8 @@ const Home = () => {
           slug: "healthcare",
           icon: Stethoscope,
           jobs: 1650,
-          color: "bg-red-100 text-red-800",
+          color: "text-red-600",
+          description: "Shifokor, hamshira, farmatsevt",
         },
         {
           id: 7,
@@ -211,7 +228,8 @@ const Home = () => {
           slug: "construction",
           icon: Hammer,
           jobs: 2340,
-          color: "bg-orange-100 text-orange-800",
+          color: "text-orange-600",
+          description: "Muhandis, arxitektor, foreman",
         },
         {
           id: 8,
@@ -219,10 +237,12 @@ const Home = () => {
           slug: "support",
           icon: Headphones,
           jobs: 1890,
-          color: "bg-teal-100 text-teal-800",
+          color: "text-teal-600",
+          description: "Customer service, technical support",
         },
       ]);
 
+      // Mock testimonials data
       setTestimonials([
         {
           id: 1,
@@ -231,7 +251,7 @@ const Home = () => {
           company: "TechCorp",
           avatar: "👩‍💻",
           rating: 5,
-          text: "JobBoard orqali orzuimdagi ishni topdim. Platforma juda qulay va professional.",
+          text: "JobBoard orqali orzuimdagi ishni topdim. Platforma juda qulay va professional. Har qadamda yordam va qo'llab-quvvatlash bor.",
           duration: "2 hafta ichida ish topdim",
         },
         {
@@ -241,7 +261,7 @@ const Home = () => {
           company: "Growth Agency",
           avatar: "👨‍💼",
           rating: 5,
-          text: "Ajoyib platform! Ko'plab sifatli vakansiyalar va oson qidiruv tizimi.",
+          text: "Ajoyib platform! Ko'plab sifatli vakansiyalar va oson qidiruv tizimi. HR menegerlar bilan to'g'ridan-to'g'ri aloqa o'rnatish imkoni bor.",
           duration: "1 oy ichida 3 ta taklif oldim",
         },
         {
@@ -251,11 +271,25 @@ const Home = () => {
           company: "Design Studio",
           avatar: "👩‍🎨",
           rating: 5,
-          text: "Eng yaxshi ish qidirish platformasi. Har doim yangi imkoniyatlar bor.",
+          text: "Eng yaxshi ish qidirish platformasi! Har doim yangi imkoniyatlar bor. Portfolio ko'rsatish va kompaniyalar bilan networking uchun ajoyib.",
           duration: "Dream job topildi!",
         },
+        {
+          id: 4,
+          name: "Akmal Tursunov",
+          role: "DevOps Engineer",
+          company: "CloudTech",
+          avatar: "👨‍💻",
+          rating: 5,
+          text: "Professional dasturchilar uchun eng yaxshi platform. Salary range'lar aniq ko'rsatilgan va interview jarayoni shaffof.",
+          duration: "3 hafta ichida remote job",
+        },
       ]);
-    }, 500);
+
+      loadData();
+    };
+
+    loadData();
   }, []);
 
   // Auto-rotate testimonials
@@ -263,34 +297,29 @@ const Home = () => {
     if (testimonials.length > 0) {
       const interval = setInterval(() => {
         setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-      }, 5000);
+      }, 6000);
       return () => clearInterval(interval);
     }
   }, [testimonials.length]);
 
   const features = [
-    {
-      icon: Zap,
-      title: "Tez qidiruv",
-      description: "AI yordamida eng mos vakansiyalarni toping",
-      color: "text-yellow-600",
-    },
+  
     {
       icon: Shield,
-      title: "Xavfsizlik",
-      description: "Ma'lumotlaringiz 100% himoyalangan",
+      title: "100% Xavfsiz",
+      description: "Ma'lumotlaringiz shifrlangan va himoyalangan",
       color: "text-green-600",
     },
     {
       icon: Users,
-      title: "Katta jamoa",
-      description: "200,000+ faol foydalanuvchi",
+      title: "250K+ Jamoa",
+      description: "Faol professional jamoamizga qo'shiling",
       color: "text-blue-600",
     },
     {
       icon: Award,
-      title: "Yuqori sifat",
-      description: "Faqat tekshirilgan vakansiyalar",
+      title: "Verified Jobs",
+      description: "Faqat tekshirilgan va sifatli vakansiyalar",
       color: "text-purple-600",
     },
   ];
@@ -298,107 +327,112 @@ const Home = () => {
   const benefits = [
     {
       icon: Target,
-      title: "Personallashtirilgan qidiruv",
+      title: "Personallashtirilgan Qidiruv",
       description:
-        "AI sizning ko'nikmalaringiz va tajribangizga mos vakansiyalarni taklif qiladi",
+        "AI sizning ko'nikmalaringiz va tajribangizga mos vakansiyalarni tavsiya qiladi. Smart matching algoritmi orqali eng yaxshi imkoniyatlarni toping.",
     },
     {
       icon: Rocket,
-      title: "Tez ariza berish",
-      description: "Bir klikda ko'plab vakansiyalarga ariza yuboring",
+      title: "Tez Ariza Berish",
+      description:
+        "Bir klikda ko'plab vakansiyalarga ariza yuboring. Auto-fill CV va cover letter generatsiyasi bilan vaqtingizni tejang.",
     },
     {
       icon: Heart,
-      title: "Karyera maslahatları",
+      title: "Karyera Coaching",
       description:
-        "Ekspertlardan bepul karyera rivojlantirish bo'yicha maslahatlar",
+        "Professional career coach'lardan bepul maslahat oling. Interview tayyorlash, CV yaxshilash va karyera rejalashtirish bo'yicha yordam.",
     },
     {
       icon: Globe,
-      title: "Global imkoniyatlar",
-      description: "Mahalliy va xalqaro kompaniyalardagi vakansiyalar",
+      title: "Global Imkoniyatlar",
+      description:
+        "Mahalliy va xalqaro kompaniyalardagi vakansiyalar. Remote work, freelance va full-time imkoniyatlarga ega bo'ling.",
     },
   ];
 
+  const stats = [
+    { number: "50K+", label: "Faol vakansiya", icon: Briefcase },
+    { number: "250K+", label: "Ro'yxatdan o'tgan", icon: Users },
+    { number: "5K+", label: "Kompaniya", icon: Building2 },
+    { number: "98%", label: "Muvaffaqiyat", icon: TrendingUp },
+  ];
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section
-        ref={heroRef}
-        className="relative bg-gradient-to-br from-primary-50 via-primary-100 to-primary-200 py-24 lg:py-32 overflow-hidden"
-      >
-        {/* Background decoration */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-24 -left-24 w-96 h-96 bg-gradient-to-r from-primary-500 to-primary-700 rounded-full opacity-10 animate-pulse"></div>
-          <div
-            className="absolute top-32 -right-32 w-80 h-80 bg-gradient-to-r from-primary-600 to-primary-800 rounded-full opacity-10 animate-pulse"
-            style={{ animationDelay: "2s" }}
-          ></div>
-          <div
-            className="absolute -bottom-16 left-1/2 w-64 h-64 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full opacity-10 animate-pulse"
-            style={{ animationDelay: "4s" }}
-          ></div>
+      <section className="hero-section">
+        <div className="hero-background">
+          <div className="hero-decoration hero-decoration-1"></div>
+          <div className="hero-decoration hero-decoration-2"></div>
+          <div className="hero-decoration hero-decoration-3"></div>
         </div>
 
-        <div className="container relative z-10">
-          <div className="max-w-5xl mx-auto text-center">
-            {/* Main Headline */}
-            <div className="mb-10">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 mb-8 leading-tight">
-                <span className="bg-gradient-to-r from-primary-600 via-primary-500 to-primary-700 bg-clip-text text-transparent">
-                  Orzuyingizdagi
-                </span>
-                <br />
-                <span className="text-gray-800">ishni toping</span>
-              </h1>
+        <div className="container">
+          <div className="hero-content">
+            <h1 className="hero-title">
+              <span className="hero-title-gradient">Orzuyingizdagi</span>
+              <br />
+              ishni toping
+            </h1>
 
-              <p className="text-xl sm:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed font-medium">
-                50,000+ vakansiya, 5,000+ kompaniya va minglab muvaffaqiyat
-                hikoyalar sizni kutmoqda. Professional karyerangizni bugun
-                boshlang.
-              </p>
-            </div>
+            <p className="hero-subtitle">
+              50,000+ vakansiya, 5,000+ kompaniya va minglab muvaffaqiyat
+              hikoyalar sizni kutmoqda. Professional karyerangizni bugun
+              boshlang va o'z sohangizda yetakchi bo'ling.
+            </p>
 
             {/* Hero Stats */}
+            <div className="hero-stats">
+              {" "}
+              {stats.map((stat) => (
+                <div key={stat.label} className="hero-stat">
+                  <div className="hero-stat-number">{stat.number}</div>
+                  <div className="hero-stat-label">
+                    <stat.icon
+                      size={16}
+                      style={{
+                        display: "inline",
+                        marginRight: "0.5rem",
+                        color: "#886BFF",
+                      }}
+                    />
+                    {stat.label}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white">
+      <section className="features-section">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Nega aynan JobBoard?
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <div className="section-header">
+            <h2 className="section-title">Nega aynan JobBoard?</h2>
+            <p className="section-subtitle">
               Eng zamonaviy texnologiyalar va professional yondashuv bilan ish
-              qidirish jarayonini osonlashtirdik
+              qidirish jarayonini osonlashtirdik va samarali qildik
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="features-grid">
             {features.map((feature, index) => (
               <div
                 key={feature.title}
                 data-animate
                 id={`feature-${index}`}
-                className={`text-center p-6 rounded-xl transition-all duration-500 hover:shadow-lg transform hover:-translate-y-2 ${
-                  isVisible[`feature-${index}`]
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
+                className={`feature-card fade-in ${
+                  visibleElements.has(`feature-${index}`) ? "visible" : ""
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div
-                  className={`w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl flex items-center justify-center`}
-                >
-                  <feature.icon className={`${feature.color}`} size={32} />
+                <div className="feature-icon">
+                  <feature.icon className={feature.color} size={32} />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">{feature.description}</p>
+                <h3 className="feature-title">{feature.title}</h3>
+                <p className="feature-description">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -406,99 +440,69 @@ const Home = () => {
       </section>
 
       {/* Featured Jobs */}
-      <section className="py-24 bg-gradient-to-br from-gray-50 to-primary-50/30">
+      <section className="jobs-section">
         <div className="container">
-          <div className="flex items-center justify-between mb-16">
-            <div>
-              <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-                Tanlangan vakansiyalar
-              </h2>
-              <p className="text-xl pt-4 pb-6 text-gray-600">
-                Eng yaxshi kompaniyalardan maxsus tanlov
+          <div className="jobs-header">
+            <div className="jobs-header-content">
+              <h2>Tanlangan vakansiyalar</h2>
+              <p>
+                Eng yaxshi kompaniyalardan maxsus tanlov va ekskluziv takliflar
               </p>
             </div>
-            <Link
-              to="/jobs?featured=true"
-              className="flex items-center space-x-3 text-primary-600 hover:text-primary-700 font-semibold text-lg transition-colors group"
-            >
+            <Link to="/jobs?featured=true" className="jobs-view-all">
               <span>Barchasini ko'rish</span>
-              <ArrowRight
-                size={20}
-                className="group-hover:translate-x-1 transition-transform"
-              />
+              <ArrowRight size={20} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="jobs-grid">
             {featuredJobs.map((job, index) => (
               <div
                 key={job.id}
                 data-animate
                 id={`job-${index}`}
-                className={`bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 group border border-gray-100 hover:border-primary-200 ${
-                  isVisible[`job-${index}`]
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
+                className={`job-card fade-in ${
+                  visibleElements.has(`job-${index}`) ? "visible" : ""
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex items-center space-x-4">
-                    <div className="text-4xl bg-primary-50 p-3 rounded-xl">
-                      {job.logo}
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-xl text-gray-900 group-hover:text-primary-600 transition-colors mb-1">
-                        {job.title}
-                      </h3>
-                      <p className="text-gray-600 font-medium">{job.company}</p>
+                <div className="job-header">
+                  <div className="job-company-info">
+                    <div className="job-logo">{job.logo}</div>
+                    <div className="job-info">
+                      <h3>{job.title}</h3>
+                      <p className="company">{job.company}</p>
                     </div>
                   </div>
-                  {job.isNew && (
-                    <span className="bg-gradient-to-r from-green-100 to-green-50 text-green-800 text-sm px-3 py-1.5 rounded-full font-semibold border border-green-200">
-                      Yangi
-                    </span>
-                  )}
+                  {job.isNew && <span className="job-badge">Yangi</span>}
                 </div>
 
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center text-gray-600">
-                    <MapPin size={16} className="mr-3 text-primary-500" />
-                    <span className="font-medium">{job.location}</span>
+                <div className="job-details">
+                  <div className="job-detail">
+                    <MapPin size={16} />
+                    <span>{job.location}</span>
                   </div>
-                  <div className="flex items-center text-gray-600">
-                    <Clock size={16} className="mr-3 text-primary-500" />
-                    <span className="font-medium">{job.type}</span>
+                  <div className="job-detail">
+                    <Clock size={16} />
+                    <span>{job.type}</span>
                   </div>
-                  <div className="flex items-center text-green-600 font-semibold">
-                    <DollarSign size={16} className="mr-3" />
-                    <span className="text-lg">{job.salary}</span>
+                  <div className="job-detail">
+                    <DollarSign size={16} />
+                    <span className="job-salary">{job.salary}</span>
                   </div>
                 </div>
 
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {job.skills?.slice(0, 3).map((skill) => (
-                    <span
-                      key={skill}
-                      className="bg-primary-50 text-primary-700 text-sm px-3 py-1.5 rounded-lg font-medium border border-primary-100"
-                    >
+                <div className="job-skills">
+                  {job.skills?.slice(0, 4).map((skill) => (
+                    <span key={skill} className="job-skill">
                       {skill}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex items-center justify-between pt-6 border-t border-gray-100">
-                  <span className="text-gray-500 font-medium">
-                    {Math.floor(
-                      (Date.now() - new Date(job.postedAt).getTime()) /
-                        (1000 * 60 * 60 * 24)
-                    )}{" "}
-                    kun oldin
-                  </span>
-                  <Link
-                    to={`/jobs/${job.id}`}
-                    className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors"
-                  >
+                <div className="job-footer">
+                  <span className="job-posted">{job.postedDays} kun oldin</span>
+                  <Link to={`/jobs/${job.id}`} className="job-apply-btn">
                     Batafsil
                   </Link>
                 </div>
@@ -509,52 +513,41 @@ const Home = () => {
       </section>
 
       {/* Categories */}
-      <section className="py-24 bg-white">
+      <section className="categories-section">
         <div className="container">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-              Kategoriyalar bo'yicha qidiring
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              O'zingizga mos sohada minglab vakansiyalar
+          <div className="section-header">
+            <h2 className="section-title">Kategoriyalar bo'yicha qidiring</h2>
+            <p className="section-subtitle">
+              O'zingizga mos sohada minglab vakansiyalar va professional
+              imkoniyatlar
             </p>
           </div>
 
-          <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-8">
+          <div className="categories-grid">
             {categories.map((category, index) => (
               <Link
                 key={category.id}
                 to={`/jobs?category=${category.slug}`}
                 data-animate
                 id={`category-${index}`}
-                className={`group p-8 border-2 border-gray-100 rounded-2xl hover:border-primary-300 hover:shadow-xl transition-all duration-500 text-center transform hover:-translate-y-2 bg-gradient-to-br from-white to-primary-50/20 ${
-                  isVisible[`category-${index}`]
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
+                className={`category-card fade-in ${
+                  visibleElements.has(`category-${index}`) ? "visible" : ""
                 }`}
                 style={{ transitionDelay: `${index * 50}ms` }}
               >
-                <div className="w-16 h-16 mx-auto mb-6 bg-primary-100 group-hover:bg-primary-200 rounded-2xl flex items-center justify-center transition-all duration-300 transform group-hover:scale-110">
-                  <category.icon
-                    className="text-primary-600 group-hover:text-primary-700 transition-colors"
-                    size={28}
-                  />
+                <div className="category-icon">
+                  <category.icon className={category.color} size={28} />
                 </div>
-                <h3 className="font-bold text-lg text-gray-900 group-hover:text-primary-600 transition-colors mb-3">
-                  {category.name}
-                </h3>
-                <p className="text-gray-600 font-medium">
+                <h3 className="category-title">{category.name}</h3>
+                <p className="category-count">
                   {category.jobs.toLocaleString()} ta vakansiya
                 </p>
               </Link>
             ))}
           </div>
 
-          <div className="text-center mt-16">
-            <Link
-              to="/jobs"
-              className="inline-flex items-center space-x-3 bg-primary-600 hover:bg-primary-700 text-white px-10 py-4 rounded-2xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-            >
+          <div className="categories-view-all">
+            <Link to="/jobs" className="categories-view-all-btn">
               <span>Barcha kategoriyalar</span>
               <ChevronRight size={20} />
             </Link>
@@ -562,42 +555,34 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Statistics */}
-
       {/* Benefits */}
-      <section className="py-20 bg-gray-50">
+      <section className="benefits-section">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Bizning afzalliklarimiz
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              JobBoard platformasini tanlash orqali siz ko'plab imkoniyatlarga
-              ega bo'lasiz
+          <div className="section-header">
+            <h2 className="section-title">Bizning afzalliklarimiz</h2>
+            <p className="section-subtitle">
+              JobBoard platformasini tanlash orqali siz professional
+              karyerangizda yangi imkoniyatlarga ega bo'lasiz
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="benefits-grid">
             {benefits.map((benefit, index) => (
               <div
                 key={benefit.title}
                 data-animate
                 id={`benefit-${index}`}
-                className={`flex space-x-4 p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition-all ${
-                  isVisible[`benefit-${index}`]
-                    ? "opacity-100 translate-x-0"
-                    : "opacity-0 translate-x-8"
+                className={`benefit-card fade-in ${
+                  visibleElements.has(`benefit-${index}`) ? "visible" : ""
                 }`}
                 style={{ transitionDelay: `${index * 100}ms` }}
               >
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="benefit-icon">
                   <benefit.icon className="text-blue-600" size={24} />
                 </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {benefit.title}
-                  </h3>
-                  <p className="text-gray-600">{benefit.description}</p>
+                <div className="benefit-content">
+                  <h3>{benefit.title}</h3>
+                  <p>{benefit.description}</p>
                 </div>
               </div>
             ))}
@@ -606,65 +591,60 @@ const Home = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 bg-white">
+      <section className="testimonials-section">
         <div className="container">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Foydalanuvchilar fikri
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Bizning platformamiz orqali ish topganlarning tajribasi
+          <div className="section-header">
+            <h2 className="section-title">Foydalanuvchilar fikri</h2>
+            <p className="section-subtitle">
+              Bizning platformamiz orqali ish topgan professionallarning haqiqiy
+              tajribasi
             </p>
           </div>
 
           {testimonials.length > 0 && (
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 md:p-12 text-center">
-                <div className="mb-6">
-                  <div className="flex justify-center space-x-1 mb-4">
-                    {[...Array(5)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="text-yellow-400 fill-current"
-                        size={20}
-                      />
-                    ))}
-                  </div>
-                  <blockquote className="text-xl md:text-2xl font-medium text-gray-900 mb-6 italic">
-                    "{testimonials[currentTestimonial]?.text}"
-                  </blockquote>
+            <div className="testimonial-container">
+              <div className="testimonial-card">
+                <div className="testimonial-stars">
+                  {[...Array(5)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="text-yellow-400"
+                      size={20}
+                      fill="currentColor"
+                    />
+                  ))}
                 </div>
 
-                <div className="flex items-center justify-center space-x-4">
-                  <div className="text-4xl">
+                <blockquote className="testimonial-text">
+                  {testimonials[currentTestimonial]?.text}
+                </blockquote>
+
+                <div className="testimonial-author">
+                  <div className="testimonial-avatar">
                     {testimonials[currentTestimonial]?.avatar}
                   </div>
-                  <div className="text-left">
-                    <div className="font-semibold text-gray-900">
-                      {testimonials[currentTestimonial]?.name}
-                    </div>
-                    <div className="text-gray-600">
+                  <div className="testimonial-info">
+                    <h4>{testimonials[currentTestimonial]?.name}</h4>
+                    <p className="role">
                       {testimonials[currentTestimonial]?.role} -{" "}
                       {testimonials[currentTestimonial]?.company}
-                    </div>
-                    <div className="text-sm text-blue-600 font-medium">
+                    </p>
+                    <p className="duration">
                       {testimonials[currentTestimonial]?.duration}
-                    </div>
+                    </p>
                   </div>
                 </div>
               </div>
 
-              {/* Testimonial indicators */}
-              <div className="flex justify-center space-x-2 mt-8">
+              <div className="testimonial-indicators">
                 {testimonials.map((_, index) => (
                   <button
                     key={index}
                     onClick={() => setCurrentTestimonial(index)}
-                    className={`w-3 h-3 rounded-full transition-colors ${
-                      index === currentTestimonial
-                        ? "bg-blue-600"
-                        : "bg-gray-300"
+                    className={`testimonial-dot ${
+                      index === currentTestimonial ? "active" : ""
                     }`}
+                    aria-label={`Go to testimonial ${index + 1}`}
                   />
                 ))}
               </div>
