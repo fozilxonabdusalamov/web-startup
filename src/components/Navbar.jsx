@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Search,
   User,
@@ -14,12 +14,15 @@ import {
   BarChart3,
   Shield,
   Briefcase,
+  Globe,
   Check,
   Heart,
   MessageSquare,
   HelpCircle,
   Languages,
   Eye,
+  Moon,
+  Sun,
 } from "lucide-react";
 import "./Navbar.css";
 
@@ -32,6 +35,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [currentLanguage, setCurrentLanguage] = useState("uz");
   const [notifications, setNotifications] = useState([]);
+  const navigate = useNavigate();
 
   // Language options
   const languages = [
@@ -121,6 +125,7 @@ const Navbar = () => {
     setUser(null);
     setNotifications([]);
     setShowUserDropdown(false);
+    navigate("/");
   };
 
   const handleLanguageChange = (langCode) => {
@@ -198,6 +203,7 @@ const Navbar = () => {
                     type="text"
                     placeholder="Search jobs, companies..."
                     className="search-input"
+                    onFocus={() => navigate("/jobs")}
                   />
                 </div>
                 <div className="location-section">
